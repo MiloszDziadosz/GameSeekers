@@ -25,7 +25,13 @@ class RoomList extends React.Component {
     // execute the code 
     componentDidMount() {
         fetch(
-"https://game-seekers-backend.herokuapp.com/v1/room/")
+"https://game-seekers-backend.herokuapp.com/v1/room/",{
+    method: 'get',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+localStorage.getItem('access_token')
+        }
+})
             .then((res) => res.json())
             .then((json) => {
                 this.setState({
@@ -43,14 +49,14 @@ class RoomList extends React.Component {
         return (
         <div className = "App">
             <h1> Fetch data from an api in react </h1>  {
-                items.results.map((item) => ( 
+            items.results.map((item) => ( 
                 <div className="roomListItem">
                     <li>Nazwa: {item.room_name}</li>
                     <li>Właściciel: {item.admin}</li>
                     <li>Miejsca: {item.available}/{item.maxsize}</li>
                     <Link  to={{pathname: "/room",state: {rm: item.room_name,ad: item.admin,mm: item.members,av: item.available,ms: item.maxsize}}}>Wejdz</Link>
                 </div>    
-                ))
+                ))    
             }
         </div>
     );

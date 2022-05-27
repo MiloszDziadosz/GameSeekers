@@ -1,7 +1,9 @@
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
+import Link from 'react-router-dom/Link';
 
 export const refreshToken = (callback1, callback2) => {
-    axios.post('http://0.0.0.0:8000/v1/accounts/refresh-token/', {
+    axios.post('https://game-seekers-backend.herokuapp.com/v1/accounts/refresh-token/', {
         "refresh" : localStorage.getItem('refresh_token') 
     }).then((response) => {
         localStorage.removeItem('access_token')
@@ -19,7 +21,7 @@ export const refreshToken = (callback1, callback2) => {
 }
 
 export const logout = () => {
-    axios.post('http://0.0.0.0:8000/v1/accounts/logout/',{
+    axios.post('https://game-seekers-backend.herokuapp.com/v1/accounts/logout/',{
         "refresh" : localStorage.getItem('refresh_token')
     }).then((response) => {
         localStorage.removeItem('access_token')
@@ -30,12 +32,13 @@ export const logout = () => {
 }
 
 export const login = (username, password) => {
-        axios.post("http://0.0.0.0:8000/v1/accounts/login/", {
+        axios.post("https://game-seekers-backend.herokuapp.com/v1/accounts/login/", {
             "username": username,
             "password": password
         }).then((response) => {
             localStorage.setItem('access_token', response.data.access);
             localStorage.setItem('refresh_token', response.data.refresh);
+            
         }).catch((error) => {
             console.log(error)
         });
