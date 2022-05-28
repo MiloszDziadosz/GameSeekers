@@ -11,18 +11,12 @@ class CreateRoomPage extends React.Component {
             room_name: "",
             gamename: "",
             maxsize: "",
-            // isEmpty: true,
         }
     }
   
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(JSON.stringify({
-            "room_name": this.state.room_name,
-            "maxsize": this.state.maxsize,
-            "members": [{ username: localStorage.getItem('currentUser') }]
-        }))
         try {
             let res = fetch(
                 "https://game-seekers-backend.herokuapp.com/v1/room/", {
@@ -41,12 +35,13 @@ class CreateRoomPage extends React.Component {
             })
                 // .then((res) => res.json())
             if (res.status === 200) {
-                console.log(res)
+                // TODO: notification for user
             } else {
-                console.log(res)
+                // TODO: notification for user
             }
         } catch (err) {
             console.log(err.message)
+            // TODO: notification for user
         }
     }
 

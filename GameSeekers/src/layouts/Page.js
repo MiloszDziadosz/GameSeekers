@@ -9,6 +9,7 @@ import LoginPage from '../pages/LoginPage';
 import GamesPage from '../pages/GamesPage';
 import RoomList from '../components/RoomList';
 import RoomPage from '../pages/RoomPage';
+import EditRoomPage from '../pages/EditRoomPage';
 
 const Page = () => {
   return (
@@ -21,6 +22,7 @@ const Page = () => {
         <Route path="/login" component={LoginPage} />
         <Route path="/gamelist" component={GamesPage} />
         <Route path="/room" component={RoomPage} />
+        <Route path="/editroom" component={EditRoomPage}/>
         <Route component={ErrorPage} />
       </Switch>
     </>

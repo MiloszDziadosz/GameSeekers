@@ -4,43 +4,44 @@ import { Prompt } from 'react-router-dom';
 class EditRoomPage extends React.Component {
     constructor(props) {
         super(props)
+        // console.log(props.location.state.room_name)
 
-        this.state = {
-            room_name: props.room_name,
-            gamename: "",
-            maxsize: props.maxsize,
-            members: props.members
-            // isEmpty: true,
-        }
+        this.state = props.location.state
+        console.log(this.state.room_name)
+        // {
+        //     room_name: props.room_name,
+        //     // game_name: props.game_name,
+        //     maxsize: props.maxsize,
+        //     members: props.members
+        //     // isEmpty: true,
+        // }
     }
-  
+
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(JSON.stringify({
-            "room_name": this.state.room_name,
-            "maxsize": this.state.maxsize,
-            "members": this.state.members
-        }))
         try {
             let res = fetch(
-                "https://game-seekers-backend.herokuapp.com/v1/room/", {
-                method: 'get',
+                "https://game-seekers-backend.herokuapp.com/v1/room/" + this.state.room_name + "/", {
+                method: 'patch',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
                 },
                 body:
                     JSON.stringify({
-                        "room_name": this.state.room_name                       
+                        "room_name": this.state.room_name,
+                        "maxsize": this.state.maxsize,
+                        "members": this.state.members,
+                        // "game_name": this.state.gamename,
                     })
 
             })
-                // .then((res) => res.json())
+            // .then((res) => res.json())
             if (res.status === 200) {
-                console.log(res)
+                // TODO notify user
             } else {
-                console.log(res)
+                // TODO notify user
             }
         } catch (err) {
             console.log(err.message)
@@ -61,9 +62,9 @@ class EditRoomPage extends React.Component {
             <div className="contact">
                 <form onSubmit={this.handleSubmit}>
                     <h3>Edycja pokoju</h3>
-                    <input name="room_name" type="text" value={this.state.value} onChange={this.handleChange} placeholder="Nazwa pokoju"></input>
-                    <input name="game" type="text" value={this.state.value} onChange={this.handleChange} placeholder="Gra"></input>
-                    <input name="maxsize" type="number" value={this.state.value} onChange={this.handleChange} placeholder="Maksymalna liczba graczy"></input>
+                    <input name="room_name" type="text" value={this.state.room_name} onChange={this.handleChange} placeholder="Nazwa pokoju"></input>
+                    <input name="game_name" type="text" value={this.state.game_name} onChange={this.handleChange} placeholder="Gra"></input>
+                    <input name="maxsize" type="number" value={this.state.maxsize} onChange={this.handleChange} placeholder="Maksymalna liczba graczy"></input>
                     <button onClick={this.handleSubmit}>Zapisz zmiany</button>
                 </form>
                 <Prompt
