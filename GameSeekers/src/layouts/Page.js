@@ -21,8 +21,8 @@ const Page = () => {
         <Route path="/admin" component={AdminPage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/gamelist" component={GamesPage} />
-        <Route path="/room" component={RoomPage} />
-        <Route path="/editroom" component={EditRoomPage}/>
+        <Route path="/room/:room_name" component={RoomPage} />
+        <Route path="/editroom/:room_name" component={EditRoomPage} />
         <Route component={ErrorPage} />
       </Switch>
     </>

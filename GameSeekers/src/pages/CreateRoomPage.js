@@ -1,24 +1,28 @@
 import React from 'react';
 import '../styles/ContactPage.css';
 import { Prompt } from 'react-router-dom';
+import RoomAdmin from '../components/RoomAdmin';
 
 
 class CreateRoomPage extends React.Component {
     constructor(props) {
         super(props)
-
+        console.log(props)
         this.state = {
             room_name: "",
-            gamename: "",
             maxsize: "",
+            game: "",
+            currentUser: localStorage.getItem('currentUser'),
+            // history: props.history,
+            isEmpty: true,
         }
     }
-  
+
 
     handleSubmit = (e) => {
         e.preventDefault();
         try {
-            let res = fetch(
+            fetch(
                 "https://game-seekers-backend.herokuapp.com/v1/room/", {
                 method: 'post',
                 headers: {
@@ -32,13 +36,15 @@ class CreateRoomPage extends React.Component {
                         "members": [{ username: localStorage.getItem('currentUser') }]
                     })
 
+            }).then(response => {
+
+                if (response.status === 200) {
+                    // TODO: notification for user
+                    this.props.history.push({ pathname: "/room/:" + this.state.room_name, state: { rm: this.state.room_name, ad: this.state.currentUser, mm: [{ username: this.state.currentUser }], av: this.state.maxsize - 1, ms: this.state.maxsize } })
+                } else {
+                    // TODO: notification for user
+                }
             })
-                // .then((res) => res.json())
-            if (res.status === 200) {
-                // TODO: notification for user
-            } else {
-                // TODO: notification for user
-            }
         } catch (err) {
             console.log(err.message)
             // TODO: notification for user
@@ -48,7 +54,8 @@ class CreateRoomPage extends React.Component {
 
     handleChange = (event) => {
         this.setState({
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value,
+            isEmpty: false
         });
     }
 
@@ -65,7 +72,7 @@ class CreateRoomPage extends React.Component {
                     <button onClick={this.handleSubmit}>Utwórz</button>
                 </form>
                 <Prompt
-                    when={!this.state.isEmpty}
+                    when={this.state.isEmpty}
                     message="Masz niewypełniony formularz. Czy na pewno chcesz opuścić tę stronę"
                 />
             </div>

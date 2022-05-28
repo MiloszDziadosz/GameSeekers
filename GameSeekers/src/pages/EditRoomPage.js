@@ -4,24 +4,15 @@ import { Prompt } from 'react-router-dom';
 class EditRoomPage extends React.Component {
     constructor(props) {
         super(props)
-        // console.log(props.location.state.room_name)
 
         this.state = props.location.state
-        console.log(this.state.room_name)
-        // {
-        //     room_name: props.room_name,
-        //     // game_name: props.game_name,
-        //     maxsize: props.maxsize,
-        //     members: props.members
-        //     // isEmpty: true,
-        // }
     }
 
 
     handleSubmit = (e) => {
         e.preventDefault();
         try {
-            let res = fetch(
+            fetch(
                 "https://game-seekers-backend.herokuapp.com/v1/room/" + this.state.room_name + "/", {
                 method: 'patch',
                 headers: {
@@ -37,12 +28,16 @@ class EditRoomPage extends React.Component {
                     })
 
             })
-            // .then((res) => res.json())
-            if (res.status === 200) {
-                // TODO notify user
-            } else {
-                // TODO notify user
-            }
+                .then(response => {
+                    if (response.status === 200) {
+                        // TODO notify user
+                        this.props.history.goBack()
+                    } else {
+                        // TODO notify user
+                    }
+                    return response.json();
+                })
+
         } catch (err) {
             console.log(err.message)
         }
@@ -67,10 +62,10 @@ class EditRoomPage extends React.Component {
                     <input name="maxsize" type="number" value={this.state.maxsize} onChange={this.handleChange} placeholder="Maksymalna liczba graczy"></input>
                     <button onClick={this.handleSubmit}>Zapisz zmiany</button>
                 </form>
-                <Prompt
+                {/* <Prompt
                     when={!this.state.isEmpty}
                     message="Masz niewypełniony formularz. Czy na pewno chcesz opuścić tę stronę"
-                />
+                /> */}
             </div>
 
         );
