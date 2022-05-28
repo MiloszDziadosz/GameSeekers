@@ -7,7 +7,7 @@ import { Navbar, Nav, Container } from 'react-bootstrap'
 const list = [
   { name: "Start", path: "/", exact: true },
   
-  { name: "Utwórz pokój", path: "/contact" },
+  { name: "Utwórz pokój", path: "/createroom" },
   { name: "Lista pokojów", path: "/roomlist" },
   { name: "Lista gier", path: "/gamelist"},
   { name: "logowanie", path: "/admin" },

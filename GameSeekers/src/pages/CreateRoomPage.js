@@ -3,7 +3,7 @@ import '../styles/ContactPage.css';
 import { Prompt } from 'react-router-dom';
 
 
-class ContactPage extends React.Component {
+class CreateRoomPage extends React.Component {
     state = {
         name: "",
         gamename: "",
@@ -50,4 +50,4 @@ class ContactPage extends React.Component {
     }
 }
 
-export default ContactPage;
+export default CreateRoomPage;
