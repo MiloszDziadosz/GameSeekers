@@ -35,13 +35,14 @@ class RoomAdmin extends React.Component {
                 <p> Jesteś administratorem tego pokoju </p>
 
                 <p> {this.state.room_name}</p>
+                <p>Gra: {this.state.game}</p>
                 <p> Admin: {this.state.admin}</p>
-                <p> {this.state.available}</p>
+                <p> Wolnych miejsc: {this.state.available}</p>
                 <p> Maksymalna liczba graczy: {this.state.maxsize}</p>{
                     this.state.members.map((item) => (
                         <p> {item.username}</p>))}
 
-                <Link to={{ pathname: "/editroom/:" + this.state.room_name, state: { room_name: this.state.room_name, admin: this.state.admin, members: this.state.members, maxsize: this.state.maxsize } }}>Edycja</Link>
+                <Link to={{ pathname: "/editroom/:" + this.state.room_name, state: { room_name: this.state.room_name, admin: this.state.admin, members: this.state.members, maxsize: this.state.maxsize, game: this.state.game } }}>Edycja</Link>
             </div>
         )
     }

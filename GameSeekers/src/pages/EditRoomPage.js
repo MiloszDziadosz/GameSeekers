@@ -24,7 +24,7 @@ class EditRoomPage extends React.Component {
                         "room_name": this.state.room_name,
                         "maxsize": this.state.maxsize,
                         "members": this.state.members,
-                        // "game_name": this.state.gamename,
+                        "game": this.state.game,
                     })
 
             })
@@ -58,12 +58,12 @@ class EditRoomPage extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                     <h3>Edycja pokoju</h3>
                     <input name="room_name" type="text" value={this.state.room_name} onChange={this.handleChange} placeholder="Nazwa pokoju"></input>
-                    <input name="game_name" type="text" value={this.state.game_name} onChange={this.handleChange} placeholder="Gra"></input>
+                    <input name="game" type="text" value={this.state.game} onChange={this.handleChange} placeholder="Gra"></input>
                     <input name="maxsize" type="number" value={this.state.maxsize} onChange={this.handleChange} placeholder="Maksymalna liczba graczy"></input>
                     <button onClick={this.handleSubmit}>Zapisz zmiany</button>
                 </form>
                 {/* <Prompt
-                    when={!this.state.isEmpty}
+                    when={this.state.isEmpty}
                     message="Masz niewypełniony formularz. Czy na pewno chcesz opuścić tę stronę"
                 /> */}
             </div>

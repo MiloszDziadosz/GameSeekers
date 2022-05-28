@@ -13,7 +13,7 @@ class CreateRoomPage extends React.Component {
             maxsize: "",
             game: "",
             currentUser: localStorage.getItem('currentUser'),
-            // history: props.history,
+            game: "",
             isEmpty: true,
         }
     }
@@ -33,6 +33,7 @@ class CreateRoomPage extends React.Component {
                     JSON.stringify({
                         "room_name": this.state.room_name,
                         "maxsize": this.state.maxsize,
+                        "game": this.state.game,
                         "members": [{ username: localStorage.getItem('currentUser') }]
                     })
 

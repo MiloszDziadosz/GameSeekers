@@ -54,7 +54,7 @@ class RoomList extends React.Component {
                             <li>Nazwa: {item.room_name}</li>
                             <li>Właściciel: {item.admin}</li>
                             <li>Miejsca: {item.available}/{item.maxsize}</li>
-                            <Link to={{ pathname: "/room", state: { rm: item.room_name, ad: item.admin, mm: item.members, av: item.available, ms: item.maxsize } }}>Wejdz</Link>
+                            <Link to={{ pathname: "/room/:" + item.room_name, state: { rm: item.room_name, ad: item.admin, mm: item.members, av: item.available, ms: item.maxsize } }}>Wejdz</Link>
                         </div>
                     ))
                 }
