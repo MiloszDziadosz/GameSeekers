@@ -1,15 +1,12 @@
 import React from "react";
 import '../styles/RoomList.css';
 import { Link } from 'react-router-dom';
-
+import { Redirect } from "react-router-dom";
 
 
 
 class RoomList extends React.Component {
 
-    goTORoom(roomName) {
-        this.props.history.push('/room', { name: roomName })
-    }
 
     // Constructor 
     constructor(props) {
@@ -36,30 +33,54 @@ class RoomList extends React.Component {
             .then((json) => {
                 this.setState({
                     items: json,
-                    DataisLoaded: true
-                });
-            })
-        localStorage.setItem('currentUser', 'test123')
+                    DataisLoaded: true,
+                    error: true
+                })
+            }).catch((error) => {
+                console.log(error)
+            });
+
     }
     render() {
-        const { DataisLoaded, items } = this.state;
-        if (!DataisLoaded) return <div>
-            <h1> Pleses wait some time.... </h1> </div>;
+        const DataisLoaded = this.state.DataisLoaded;
+        const items = this.state.items;
+        if (!DataisLoaded) {
+            return <div>
+                <h1> Pleses wait some time.... </h1> </div>;
+        }
+        // if (this.state.error === true) {
+        //     return <p>do login</p>;}
+        try {
+            items.results.map((item) => (
+                <div className="roomListItem">
+                    <li>Nazwa: {item.room_name}</li>
+                    <li>Właściciel: {item.admin}</li>
+                    <li>Miejsca: {item.available}/{item.maxsize}</li>
+                    <Link to={{ pathname: "/room/:" + item.room_name, state: { rm: item.room_name, ad: item.admin, mm: item.members, av: item.available, ms: item.maxsize } }}>Wejdz</Link>
+                </div>
+            ))
+        } catch (error) {
+            return <Redirect to='/login' />;
+        }
+        if (this.state.error == true) {
+            return (
+                <div className="App">
+                    <h1> Room List </h1>  {
+                        items.results.map((item) => (
+                            <div className="roomListItem">
+                                <li>Nazwa: {item.room_name}</li>
+                                <li>Gra: {item.game} </li>
+                                <li>Miasto: {item.city} </li>
+                                <li>Właściciel: {item.admin}</li>
+                                <li>Miejsca: {item.available}/{item.maxsize}</li>
+                                <Link to={{ pathname: "/room/:" + item.room_name, state: { rm: item.room_name, ad: item.admin, mm: item.members, av: item.available, ms: item.maxsize } }}>Wejdz</Link>
+                            </div>
+                        ))}
 
-        return (
-            <div className="App">
-                <h1> Fetch data from an api in react </h1>  {
-                    items.results.map((item) => (
-                        <div className="roomListItem">
-                            <li>Nazwa: {item.room_name}</li>
-                            <li>Właściciel: {item.admin}</li>
-                            <li>Miejsca: {item.available}/{item.maxsize}</li>
-                            <Link to={{ pathname: "/room/:" + item.room_name, state: { rm: item.room_name, ad: item.admin, mm: item.members, av: item.available, ms: item.maxsize } }}>Wejdz</Link>
-                        </div>
-                    ))
-                }
-            </div>
-        );
+
+                </div>
+            );
+        }
     }
 }
 
