@@ -1,5 +1,8 @@
 import React from 'react';
-import {login} from '../actions/auth';
+
+import { Redirect } from 'react-router-dom';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 class LoginPage extends React.Component {
     
@@ -8,8 +11,12 @@ class LoginPage extends React.Component {
         this.state={
             username: "",
             password: "",
+            redirect: "",
         };
+        
     }
+
+    
 
     changeValue = (event) => {
         this.setState({
@@ -17,11 +24,30 @@ class LoginPage extends React.Component {
         });
     }
 
-    submit = () => {login(this.state.username, this.state.password)}
+    submit = () => {
+        axios.post("https://game-seekers-backend.herokuapp.com/v1/accounts/login/", {
+            "username": this.state.username,
+            "password": this.state.password
+        }).then((response) => {
+            localStorage.setItem('access_token', response.data.access);
+            localStorage.setItem('refresh_token', response.data.refresh);
+            localStorage.setItem('currentUser', 'test123')
+            this.setState({redirect: response.status})
+        }).catch((error) => {
+
+        });        
+    }
    
-    render(){    
-        return (
+    render(){  
+
+        if (this.state.redirect === 200) {
+            return <Redirect to='/roomlist'/>;
+        }
+        else{
+            return (
+            
             <div>
+                <h1>{this.state.redirect}</h1>
                 <input
                     name="username"
                     type="text"
@@ -36,10 +62,11 @@ class LoginPage extends React.Component {
                     onChange={this.changeValue}
                     placeholder = "password"
                 />
-                <button onClick={this.submit}>login</button> 
+                <button onClick={this.submit}>login</button>
+                <p>If you don't have account -{'>'} <Link to={{ pathname: "/register" }}>Register</Link></p> 
             </div>
         );
     }
-}
+}}
 
 export default LoginPage;

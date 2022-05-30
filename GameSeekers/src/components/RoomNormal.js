@@ -1,4 +1,5 @@
 import React from "react";
+import Chat from "./chat/Chat";
 
 
 const RoomNormal = (props) => {
@@ -9,6 +10,7 @@ const RoomNormal = (props) => {
         <p> { props.admin }</p>
         <p> { props.available }</p>
         <p> "udało się"</p>
+        
         </div>
     );
   }

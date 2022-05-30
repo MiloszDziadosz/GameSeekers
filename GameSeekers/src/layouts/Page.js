@@ -9,6 +9,8 @@ import LoginPage from '../pages/LoginPage';
 import GamesPage from '../pages/GamesPage';
 import RoomList from '../components/RoomList';
 import RoomPage from '../pages/RoomPage';
+import EditRoomPage from '../pages/EditRoomPage';
+import RegisterPage from '../pages/RegisterPage';
 
 const Page = () => {
   return (
@@ -19,8 +21,10 @@ const Page = () => {
         <Route path="/createroom" component={CreateRoomPage} />
         <Route path="/admin" component={AdminPage} />
         <Route path="/login" component={LoginPage} />
+        <Route path="/register" component={RegisterPage} />
         <Route path="/gamelist" component={GamesPage} />
-        <Route path="/room" component={RoomPage} />
+        <Route path="/room/:room_name" component={RoomPage} />
+        <Route path="/editroom/:room_name" component={EditRoomPage} />
         <Route component={ErrorPage} />
       </Switch>
     </>
