@@ -2,7 +2,8 @@ import React from "react";
 import '../styles/RoomList.css';
 import { Link } from 'react-router-dom';
 import { Redirect } from "react-router-dom";
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 class RoomList extends React.Component {
@@ -14,8 +15,38 @@ class RoomList extends React.Component {
 
         this.state = {
             items: {},
-            DataisLoaded: false
+            DataisLoaded: false,
+            games: [],
         };
+
+        try {
+            fetch(
+                "https://game-seekers-backend.herokuapp.com/v1/game/", {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                },
+            }).then(response => {
+                if (response.status === 200) {
+                    response.json().then((json) => {
+                        if (json.results) {
+                            this.setState({ games: json.results })
+                        }
+                    })
+                } else {
+                    response.json().then(json => {
+                        toast.error(json.detail, {
+                            position: "top-center", autoClose: 4000, hideProgressBar: false,
+                            closeOnClick: true, pauseOnHover: false, draggable: true, progress: undefined
+                        });
+                    })
+                }
+            })
+        } catch (err) {
+            console.log(err.message)
+        }
+
     }
 
     // ComponentDidMount is used to
@@ -40,10 +71,17 @@ class RoomList extends React.Component {
                 console.log(error)
             });
 
+
+
     }
     render() {
         const DataisLoaded = this.state.DataisLoaded;
         const items = this.state.items;
+        let games_dict = {}
+        this.state.games.map(({ id, game_name }) => (
+            games_dict[id] = game_name
+        ))
+
         if (!DataisLoaded) {
             return <div>
                 <h1> Pleses wait some time.... </h1> </div>;
@@ -69,11 +107,11 @@ class RoomList extends React.Component {
                         items.results.map((item) => (
                             <div className="roomListItem">
                                 <li>Nazwa: {item.room_name}</li>
-                                <li>Gra: {item.game} </li>
+                                <li>Gra: {games_dict[item.game]} </li>
                                 <li>Miasto: {item.city} </li>
                                 <li>Właściciel: {item.admin}</li>
                                 <li>Miejsca: {item.available}/{item.maxsize}</li>
-                                <Link to={{ pathname: "/room/:" + item.room_name, state: { rm: item.room_name, ad: item.admin, mm: item.members, av: item.available, ms: item.maxsize } }}>Wejdz</Link>
+                                <Link to={{ pathname: "/room/:" + item.room_name, state: { rm: item.room_name, ad: item.admin, mm: item.members, av: item.available, ms: item.maxsize, games: [] } }}>Wejdz</Link>
                             </div>
                         ))}
 

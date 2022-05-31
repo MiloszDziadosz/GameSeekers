@@ -11,9 +11,10 @@ import RoomList from '../components/RoomList';
 import RoomPage from '../pages/RoomPage';
 import EditRoomPage from '../pages/EditRoomPage';
 
+
 const Page = () => {
   return (
-    <>
+    <div>
       <Switch>
         <Route path="/" exact component={HomePage} />
         <Route path="/roomlist" component={RoomList} />
@@ -25,7 +26,7 @@ const Page = () => {
         <Route path="/editroom/:room_name" component={EditRoomPage} />
         <Route component={ErrorPage} />
       </Switch>
-    </>
+    </div>
   );
 }
 

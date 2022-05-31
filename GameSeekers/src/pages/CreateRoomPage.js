@@ -1,8 +1,8 @@
 import React from 'react';
 import '../styles/ContactPage.css';
 import { Prompt } from 'react-router-dom';
-import RoomAdmin from '../components/RoomAdmin';
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class CreateRoomPage extends React.Component {
     constructor(props) {
@@ -40,7 +40,12 @@ class CreateRoomPage extends React.Component {
                     )
                     // TODO: notification for user
                 } else {
-                    // TODO: notification for user
+                    response.json().then(json => {
+                        toast.error(json.detail, {
+                            position: "top-center", autoClose: 4000, hideProgressBar: false,
+                            closeOnClick: true, pauseOnHover: false, draggable: true, progress: undefined
+                        });
+                    })
                 }
             })
         } catch (err) {
@@ -58,7 +63,6 @@ class CreateRoomPage extends React.Component {
             }).then(response => {
                 if (response.status === 200) {
                     response.json().then((json) => {
-                        console.log(json)
                         if (json.results) {
                             this.setState({ cities: json.results, fetchingCities: false, city: json.results[0].city_name })
                         }
@@ -101,9 +105,25 @@ class CreateRoomPage extends React.Component {
 
                 if (response.status === 200) {
                     // TODO: notification for user
+                    response.json().then(json => {
+                        toast.success('🦄 ' + json.detail, {
+                            position: "top-center",
+                            autoClose: 2000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                        });
+                    })
                     this.props.history.push({ pathname: "/room/:" + this.state.room_name, state: { rm: this.state.room_name, ad: this.state.currentUser, mm: [{ username: this.state.currentUser }], av: this.state.maxsize - 1, ms: this.state.maxsize } })
                 } else {
-                    // TODO: notification for user
+                    response.json().then(json => {
+                        toast.error(json.detail, {
+                            position: "top-center", autoClose: 4000, hideProgressBar: false,
+                            closeOnClick: true, pauseOnHover: false, draggable: true, progress: undefined
+                        });
+                    })
                 }
             })
         } catch (err) {

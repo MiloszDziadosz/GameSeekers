@@ -1,5 +1,6 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 class RoomAdmin extends React.Component {
 
@@ -7,6 +8,8 @@ class RoomAdmin extends React.Component {
         super(props)
 
         this.state = props
+
+        
     }
 
     componentDidMount() {
@@ -20,7 +23,10 @@ class RoomAdmin extends React.Component {
                 },
             }).then((res) => res.json())
                 .then((json) => {
-                    json.results.map((item) => (this.setState(item)))
+                    json.results.map((item) => {
+                        Object.keys(item).map((key) => {
+                            this.setState({[key]: item[key]})
+                        })})
                 })
 
         } catch (err) {
@@ -28,24 +34,65 @@ class RoomAdmin extends React.Component {
         }
     }
 
+    handleDelete = (e) => {
+        e.preventDefault();
+        try {
+            fetch("https://game-seekers-backend.herokuapp.com/v1/room/" + this.state.room_name + "/", {
+                method: 'delete',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                },
+            }).then(response => {
+                if (response.status == 200) {
+                    response.json().then(json => {
+                        toast.success('🦄 ' + json.detail, {
+                            position: "top-center",
+                            autoClose: 2000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                        });
+                    })
+                    this.props.history.push({ pathname: "/roomlist" })
+                } else {
+                    response.json().then(json => {
+                        toast.error(json.detail, {
+                            position: "top-center", autoClose: 4000, hideProgressBar: false,
+                            closeOnClick: true, pauseOnHover: false, draggable: true, progress: undefined
+                        });
+                    })
+                }
+            })
+        } catch (err) {
+            console.log(err.message)
+        }
+
+    }
+
     render() {
         return (
-
             <div>
                 <p> Jesteś administratorem tego pokoju </p>
 
                 <p> {this.state.room_name}</p>
-                <p>Gra: {this.state.game}</p>
+                <p>Gra: {this.state.game_name}</p>
                 <p> Admin: {this.state.admin}</p>
                 <p> Wolnych miejsc: {this.state.available}</p>
-                <p> Maksymalna liczba graczy: {this.state.maxsize}</p>{
-                    this.state.members.map((item) => (
-                        <p> {item.username}</p>))}
+                <p> Maksymalna liczba graczy: {this.state.maxsize}</p>
+                <p>Członkowie:</p>
+                {this.state.members.map((item) => (
+                    <p key={item.username}> {item.username}</p>))}
 
                 <Link to={{ pathname: "/editroom/:" + this.state.room_name, state: { room_name: this.state.room_name, admin: this.state.admin, members: this.state.members, maxsize: this.state.maxsize, game: this.state.game } }}>Edycja</Link>
+                <form onSubmit={this.handleDelete}>
+                    <button className="delete-button" type="submit">Usuń pokój</button>
+                </form>
             </div>
         )
     }
 }
 
-export default RoomAdmin;
+export default withRouter(RoomAdmin);
