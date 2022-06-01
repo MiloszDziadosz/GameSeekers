@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/ContactPage.css';
 import { Prompt } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 class CreateRoomPage extends React.Component {
@@ -12,7 +12,6 @@ class CreateRoomPage extends React.Component {
             maxsize: "",
             game: "",
             currentUser: localStorage.getItem('currentUser'),
-            game: "",
             city: "",
             isEmpty: true,
             games: [],

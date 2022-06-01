@@ -1,11 +1,13 @@
 import React from 'react';
-import {login} from '../actions/auth';
+import { login, logout } from '../actions/auth';
+import { Redirect } from "react-router-dom";
+
 
 class LoginPage extends React.Component {
-    
-    constructor(props){
+
+    constructor(props) {
         super(props)
-        this.state={
+        this.state = {
             username: "",
             password: "",
         };
@@ -17,26 +19,40 @@ class LoginPage extends React.Component {
         });
     }
 
-    submit = () => {login(this.state.username, this.state.password)}
-   
-    render(){    
+    login_user = (e) => {
+        e.preventDefault();
+        login(this.state.username, this.state.password)
+    }
+
+    logout_user = (e) => {
+        e.preventDefault();
+        logout()
+    }
+
+    render() {
         return (
             <div>
-                <input
-                    name="username"
-                    type="text"
-                    value={this.state.username}
-                    onChange={this.changeValue}
-                    placeholder = "username"
-                /> 
-                <input
-                    name="password"
-                    type="password"
-                    value={this.state.password}
-                    onChange={this.changeValue}
-                    placeholder = "password"
-                />
-                <button onClick={this.submit}>login</button> 
+                <form onSubmit={this.login_user}>
+                    <input
+                        name="username"
+                        type="text"
+                        value={this.state.username}
+                        onChange={this.changeValue}
+                        placeholder="username"
+                    />
+                    <input
+                        name="password"
+                        type="password"
+                        value={this.state.password}
+                        onChange={this.changeValue}
+                        placeholder="password"
+                    />
+                    <button type="submit">Login</button>
+                </form>
+
+                <form onSubmit={this.logout_user}>
+                    <button type="submit">Logout</button>
+                </form>
             </div>
         );
     }

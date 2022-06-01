@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 import RoomNormal from '../components/RoomNormal';
 import RoomAdmin from '../components/RoomAdmin';
 import RoomFull from '../components/RoomFull';
@@ -25,6 +24,7 @@ class RoomPage extends React.Component {
   render() {
     let status = this.state.members.map((user) => { if (user.username == this.state.currentUser) { return 1 } }
     )
+    console.log(this.state.currentUser)
     {
       if (status == 1 && this.state.currentUser != this.state.admin) return (
         <RoomNormal
