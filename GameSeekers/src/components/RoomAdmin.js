@@ -1,15 +1,19 @@
 import React from "react";
 import { Link, withRouter } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 class RoomAdmin extends React.Component {
 
     constructor(props) {
         super(props)
 
-        this.state = props
-
-        
+        this.state = {
+            room_name: props.room_name,
+            maxsize: props.maxsize,
+            game: props.game,
+            city: props.city,
+            members: props.members,
+        }
     }
 
     componentDidMount() {
@@ -25,8 +29,9 @@ class RoomAdmin extends React.Component {
                 .then((json) => {
                     json.results.map((item) => {
                         Object.keys(item).map((key) => {
-                            this.setState({[key]: item[key]})
-                        })})
+                            this.setState({ [key]: item[key] })
+                        })
+                    })
                 })
 
         } catch (err) {
@@ -44,7 +49,7 @@ class RoomAdmin extends React.Component {
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
                 },
             }).then(response => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(json => {
                         toast.success('🦄 ' + json.detail, {
                             position: "top-center",
@@ -86,7 +91,7 @@ class RoomAdmin extends React.Component {
                 {this.state.members.map((item) => (
                     <p key={item.username}> {item.username}</p>))}
 
-                <Link to={{ pathname: "/editroom/:" + this.state.room_name, state: { room_name: this.state.room_name, admin: this.state.admin, members: this.state.members, maxsize: this.state.maxsize, game: this.state.game } }}>Edycja</Link>
+                <Link to={{ pathname: "/editroom/:" + this.state.room_name, state: this.state }}>Edycja</Link>
                 <form onSubmit={this.handleDelete}>
                     <button className="delete-button" type="submit">Usuń pokój</button>
                 </form>

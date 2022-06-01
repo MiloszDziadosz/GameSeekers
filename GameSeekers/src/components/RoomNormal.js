@@ -1,16 +1,27 @@
 import React from "react";
 
 
-const RoomNormal = (props) => {
-    return (
-        <div>
-        <p> { props.room_name }</p>
-        <p> { props.maxsize }</p>
-        <p> { props.admin }</p>
-        <p> { props.available }</p>
-        <p> "udało się"</p>
-        </div>
-    );
-  }
-  
-  export default RoomNormal;
+class RoomNormal extends React.Component {
+
+    constructor(props) {
+        super(props)
+        this.state = props
+    }
+
+    render() {
+        return (
+            <div>
+                <p> {this.state.room_name}</p>
+                <p>Gra: {this.state.game_name}</p>
+                <p> Admin: {this.state.admin}</p>
+                <p> Wolnych miejsc: {this.state.available}</p>
+                <p> Maksymalna liczba graczy: {this.state.maxsize}</p>
+                <p>Członkowie:</p>
+                {this.state.members.map((item) => (
+                    <p key={item.username}> {item.username}</p>))}
+            </div>
+        );
+    }
+}
+
+export default RoomNormal;

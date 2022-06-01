@@ -2,8 +2,6 @@ import React from "react";
 import '../styles/RoomList.css';
 import { Link } from 'react-router-dom';
 import { Redirect } from "react-router-dom";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 
 class RoomList extends React.Component {
@@ -70,12 +68,12 @@ class RoomList extends React.Component {
             localStorage.removeItem('currentUser')
             return <Redirect to='/login' />;
         }
-        if (this.state.error == true) {
+        if (this.state.error === true) {
             return (
                 <div className="App">
                     <h1> Room List </h1>  {
                         items.results.map((item) => (
-                            <div className="roomListItem">
+                            <div key="room-list" className="roomListItem">
                                 <li key="room_name">Nazwa: {item.room_name}</li>
                                 <li key="game_name">Gra: {item.game_name} </li>
                                 <li key="city">Miasto: {item.city} </li>

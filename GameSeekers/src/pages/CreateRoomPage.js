@@ -146,7 +146,7 @@ class CreateRoomPage extends React.Component {
             <div className="contact">
                 <form onSubmit={this.handleSubmit}>
                     <h3>Tworzenie pokoju</h3>
-                    <input name="room_name" type="text" value={this.state.name} onChange={this.handleChange} placeholder="Nazwa pokoju"></input>
+                    <input name="room_name" type="text" value={this.state.room_name} onChange={this.handleChange} placeholder="Nazwa pokoju"></input>
                     <select name="game" value={this.state.game} onChange={this.handleChange} disabled={this.state.fetchingGames}>
                         {this.state.games.map(({ id, game_name }) => (
                             <option key={id} value={id}>{game_name}</option>
