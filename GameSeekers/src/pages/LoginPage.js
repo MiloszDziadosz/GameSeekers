@@ -1,6 +1,5 @@
 import React from 'react';
 import { login, logout } from '../actions/auth';
-import { Redirect } from "react-router-dom";
 
 
 class LoginPage extends React.Component {
@@ -32,7 +31,7 @@ class LoginPage extends React.Component {
     render() {
         return (
             <div>
-                <form onSubmit={this.login_user}>
+                <form onSubmit={this.login_user} hidden={localStorage.getItem("currentUser")!=null}>
                     <input
                         name="username"
                         type="text"
@@ -50,7 +49,7 @@ class LoginPage extends React.Component {
                     <button type="submit">Login</button>
                 </form>
 
-                <form onSubmit={this.logout_user}>
+                <form onSubmit={this.logout_user} hidden={localStorage.getItem("currentUser")==null}>
                     <button type="submit">Logout</button>
                 </form>
             </div>
