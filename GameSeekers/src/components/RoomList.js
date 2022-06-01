@@ -65,6 +65,9 @@ class RoomList extends React.Component {
                 </div>
             ))
         } catch (error) {
+            localStorage.removeItem('access_token')
+            localStorage.removeItem('refresh_token')
+            localStorage.removeItem('currentUser')
             return <Redirect to='/login' />;
         }
         if (this.state.error == true) {
@@ -78,7 +81,7 @@ class RoomList extends React.Component {
                                 <li key="city">Miasto: {item.city} </li>
                                 <li key="admin">Właściciel: {item.admin}</li>
                                 <li key="available">Miejsca: {item.available}/{item.maxsize}</li>
-                                <Link to={{ pathname: "/room/:" + item.room_name, state: { rm: item.room_name, ad: item.admin, mm: item.members, av: item.available, ms: item.maxsize } }}>Wejdz</Link>
+                                <Link to={{ pathname: "/room/:" + item.room_name, state: { rm: item.room_name, ad: item.admin, mm: item.members, av: item.available, ms: item.maxsize } }}>{(item.members.map(({ username }) => username)).includes(localStorage.getItem("currentUser")) ? "Wejdź" : "Dołącz"}</Link>
                             </div>
                         ))}
 
