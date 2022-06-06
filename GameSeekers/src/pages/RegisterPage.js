@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import ErrorRegisterForm from '../components/ErrorRegisterForm';
+import "../styles/RegisterPage.css"
 
 
 class RegisterPage extends React.Component {
@@ -51,8 +51,9 @@ class RegisterPage extends React.Component {
         }
         if (this.state.redirect === 400) {
         return (
-            <div>
-                <p>Wprowadź poprawne dane</p>
+            <div className='register-page-container'>
+                <h1>Rejestracja</h1>
+                <p>Sprawdź poprawność</p>
                 <input
                     name="username"
                     type="text"
@@ -81,14 +82,15 @@ class RegisterPage extends React.Component {
                     onChange={this.changeValue}
                     placeholder = "repeat"
                 />
-                <button onClick={this.submit}>login</button> 
+                <button className='btn' onClick={this.submit}>login</button> 
             </div>
         );
     }
     else {
         return (
             
-            <div>
+            <div className='register-page-container'>
+                <h1>Rejestracja</h1>
                 <input
                     name="username"
                     type="text"
@@ -117,7 +119,7 @@ class RegisterPage extends React.Component {
                     onChange={this.changeValue}
                     placeholder = "repeat"
                 />
-                <button onClick={this.submit}>login</button> 
+                <button className='btn' onClick={this.submit}>login</button> 
             </div>
         );
     }}

@@ -3,6 +3,8 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import "../styles/LoginPage.css";
+
 
 class LoginPage extends React.Component {
     
@@ -46,8 +48,8 @@ class LoginPage extends React.Component {
         else{
             return (
             
-            <div>
-                <h1>{this.state.redirect}</h1>
+            <div className="login-page-container">
+                <h1>Logowanie</h1>
                 <input
                     name="username"
                     type="text"
@@ -62,7 +64,9 @@ class LoginPage extends React.Component {
                     onChange={this.changeValue}
                     placeholder = "password"
                 />
-                <button onClick={this.submit}>login</button>
+                <div className='btn-container'>
+                <button className='btn' onClick={this.submit}>login</button>
+                </div>
                 <p>If you don't have account -{'>'} <Link to={{ pathname: "/register" }}>Register</Link></p> 
             </div>
         );

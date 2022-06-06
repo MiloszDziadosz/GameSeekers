@@ -18,13 +18,17 @@ const Navigation = () => {
   const [isNavExpanded, setIsNavExpanded] = useState(false)
   const menu = list.map(item => (
     <li>
-      <NavLink to={item.path} exact={item.exact ? item.exact : false}>{item.name}</NavLink>
+      <NavLink onClick={() => {
+          setIsNavExpanded(false)
+        }} to={item.path} exact={item.exact ? item.exact : false}>{item.name}</NavLink>
     </li>
   ))
 
   return (
     <nav className="navigation">
-      <a href="/" className="brand-name">
+      <a onClick={() => {
+          setIsNavExpanded(false)
+        }} href="/" className="brand-name">
         GameSeekers
       </a>
       <button

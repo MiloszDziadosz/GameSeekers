@@ -38,6 +38,21 @@ class RoomPage extends React.Component {
       );
     }
     {
+      if (status == 1 && this.state.currentUser == this.state.admin) {
+
+        return (
+          <RoomAdmin
+            room_name={this.state.room_name}
+            maxsize={this.state.maxsize}
+            members={this.state.members}
+            admin={this.state.admin}
+            available={this.state.available}
+          />
+
+        );
+      }
+    }
+    {
       if (status != 1) return (
         <RoomJoin
           room_name={this.state.room_name}
@@ -54,21 +69,7 @@ class RoomPage extends React.Component {
         <RoomFull />
       );
     }
-    {
-      if (status == 1 && this.state.currentUser == this.state.admin) {
-
-        return (
-          <RoomAdmin
-            room_name={this.state.room_name}
-            maxsize={this.state.maxsize}
-            members={this.state.members}
-            admin={this.state.admin}
-            available={this.state.available}
-          />
-
-        );
-      }
-    }
+    
 
 
     return (
