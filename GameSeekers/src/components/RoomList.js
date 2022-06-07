@@ -2,6 +2,8 @@ import React from "react";
 import '../styles/RoomList.css';
 import { Link } from 'react-router-dom';
 import { Redirect } from "react-router-dom";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 class RoomList extends React.Component {
@@ -14,7 +16,36 @@ class RoomList extends React.Component {
         this.state = {
             items: {},
             DataisLoaded: false,
+            games: [],
         };
+
+        try {
+            fetch(
+                "https://game-seekers-backend.herokuapp.com/v1/game/", {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                },
+            }).then(response => {
+                if (response.status === 200) {
+                    response.json().then((json) => {
+                        if (json.results) {
+                            this.setState({ games: json.results })
+                        }
+                    })
+                } else {
+                    response.json().then(json => {
+                        toast.error(json.detail, {
+                            position: "top-center", autoClose: 4000, hideProgressBar: false,
+                            closeOnClick: true, pauseOnHover: false, draggable: true, progress: undefined
+                        });
+                    })
+                }
+            })
+        } catch (err) {
+            console.log(err.message)
+        }
 
     }
 
@@ -47,6 +78,11 @@ class RoomList extends React.Component {
         const DataisLoaded = this.state.DataisLoaded;
         const items = this.state.items;
 
+        let games_dict = {}
+        this.state.games.map(({ id, game_name }) => (
+            games_dict[id] = game_name
+        ))
+
         if (!DataisLoaded) {
             return <div>
                 <h1> Pleses wait some time.... </h1> </div>;
@@ -59,7 +95,7 @@ class RoomList extends React.Component {
                     <li>Nazwa: {item.room_name}</li>
                     <li>Właściciel: {item.admin}</li>
                     <li>Miejsca: {item.available}/{item.maxsize}</li>
-                    <Link to={{ pathname: "/room/:" + item.room_name, state: { rm: item.room_name, ad: item.admin, mm: item.members, av: item.available, ms: item.maxsize } }}>Wejdz</Link>
+                    <Link className="btn" to={{ pathname: "/room/:" + item.room_name, state: { rm: item.room_name, ad: item.admin, mm: item.members, av: item.available, ms: item.maxsize } }}>Wejdz</Link>
                 </div>
             ))
         } catch (error) {
@@ -70,20 +106,32 @@ class RoomList extends React.Component {
         }
         if (this.state.error === true) {
             return (
-                <div className="App">
+                <div className="room-list">
                     <h1> Room List </h1>  {
                         items.results.map((item) => (
-                            <div key="room-list" className="roomListItem">
-                                <li key="room_name">Nazwa: {item.room_name}</li>
-                                <li key="game_name">Gra: {item.game_name} </li>
-                                <li key="city">Miasto: {item.city} </li>
-                                <li key="admin">Właściciel: {item.admin}</li>
-                                <li key="available">Miejsca: {item.available}/{item.maxsize}</li>
+                            <div className="roomListItem">
+                                <div className="left-row">
+                                <div className="title">
+                                <p>{item.room_name}</p>
+                                </div>
+                                
+                                <div className="game">
+                                <p>Gra: {games_dict[item.game]} </p>
+                                <p>Miejsca: {item.available}/{item.maxsize}</p>
+                                </div>
+                                
+                                
+                                <div className="other-info">
+                                <p>Właściciel: {item.admin}</p>
+                                <p>Miasto: {item.city} </p>    
+                                </div>
+                                
+                                </div>
+                                <div className="button">
                                 <Link to={{ pathname: "/room/:" + item.room_name, state: { rm: item.room_name, ad: item.admin, mm: item.members, av: item.available, ms: item.maxsize } }}>{(item.members.map(({ username }) => username)).includes(localStorage.getItem("currentUser")) ? "Wejdź" : "Dołącz"}</Link>
                             </div>
+                            </div>
                         ))}
-
-
                 </div>
             );
         }

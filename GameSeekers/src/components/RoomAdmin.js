@@ -1,6 +1,10 @@
 import React from "react";
 import { Link, withRouter } from 'react-router-dom';
+
 import { toast } from 'react-toastify';
+import MeetingInfo from "./MeetingInfo";
+import ChatList from '../components/chat/ChatList';
+
 
 class RoomAdmin extends React.Component {
 
@@ -14,6 +18,7 @@ class RoomAdmin extends React.Component {
             city: props.city,
             members: props.members,
         }
+
     }
 
     componentDidMount() {
@@ -29,9 +34,8 @@ class RoomAdmin extends React.Component {
                 .then((json) => {
                     json.results.map((item) => {
                         Object.keys(item).map((key) => {
-                            this.setState({ [key]: item[key] })
-                        })
-                    })
+                            this.setState({[key]: item[key]})
+                        })})
                 })
 
         } catch (err) {
@@ -79,7 +83,8 @@ class RoomAdmin extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="room-container">
+                <ChatList room={this.state.room_name} />
                 <p> Jesteś administratorem tego pokoju </p>
 
                 <p> {this.state.room_name}</p>
@@ -91,10 +96,15 @@ class RoomAdmin extends React.Component {
                 {this.state.members.map((item) => (
                     <p key={item.username}> {item.username}</p>))}
 
+                <MeetingInfo room_name={this.state.room_name} ifAdmin={ 1 }/>
+                <div className="buttons">
                 <Link to={{ pathname: "/editroom/:" + this.state.room_name, state: this.state }}>Edycja</Link>
-                <form onSubmit={this.handleDelete}>
-                    <button className="delete-button" type="submit">Usuń pokój</button>
+                <Link to={{ pathname: "/createmeeting", state: { room_name: this.state.room_name} }}>meeting create</Link>
+                <form  onSubmit={this.handleDelete}>
+                    <button className="btn" type="submit">Usuń pokój</button>
                 </form>
+                </div>
+
             </div>
         )
     }

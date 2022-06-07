@@ -1,5 +1,10 @@
 import React from 'react';
+
 import { login, logout } from '../actions/auth';
+import { Redirect } from 'react-router-dom';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import "../styles/LoginPage.css";
 
 
 class LoginPage extends React.Component {
@@ -9,8 +14,12 @@ class LoginPage extends React.Component {
         this.state = {
             username: "",
             password: "",
+            redirect: "",
         };
+        
     }
+
+    
 
     changeValue = (event) => {
         this.setState({
@@ -28,33 +37,55 @@ class LoginPage extends React.Component {
         logout()
     }
 
-    render() {
-        return (
-            <div>
-                <form onSubmit={this.login_user} hidden={localStorage.getItem("currentUser")!=null}>
-                    <input
-                        name="username"
-                        type="text"
-                        value={this.state.username}
-                        onChange={this.changeValue}
-                        placeholder="username"
-                    />
-                    <input
-                        name="password"
-                        type="password"
-                        value={this.state.password}
-                        onChange={this.changeValue}
-                        placeholder="password"
-                    />
-                    <button type="submit">Login</button>
-                </form>
+    submit = () => {
+        axios.post("https://game-seekers-backend.herokuapp.com/v1/accounts/login/", {
+            "username": this.state.username,
+            "password": this.state.password
+        }).then((response) => {
+            localStorage.setItem('access_token', response.data.access);
+            localStorage.setItem('refresh_token', response.data.refresh);
+            localStorage.setItem('currentUser', 'test123')
+            this.setState({redirect: response.status})
+        }).catch((error) => {
 
-                <form onSubmit={this.logout_user} hidden={localStorage.getItem("currentUser")==null}>
+        });        
+    }
+   
+    render(){  
+
+        if (this.state.redirect === 200) {
+            return <Redirect to='/roomlist'/>;
+        }
+        else{
+            return (
+            
+            <div className="login-page-container" hidden={localStorage.getItem("currentUser")!=null>
+                <h1>Logowanie</h1>
+                <input
+                    name="username"
+                    type="text"
+                    value={this.state.username}
+                    onChange={this.changeValue}
+                    placeholder = "username"
+                /> 
+                <input
+                    name="password"
+                    type="password"
+                    value={this.state.password}
+                    onChange={this.changeValue}
+                    placeholder = "password"
+                />
+                <div className='btn-container'>
+                <button className='btn' onClick={this.submit}>login</button>
+                </div>
+                <p>If you don't have account -{'>'} <Link to={{ pathname: "/register" }}>Register</Link></p> 
+
+            </div>
+           <form onSubmit={this.logout_user} hidden={localStorage.getItem("currentUser")==null}>
                     <button type="submit">Logout</button>
                 </form>
-            </div>
         );
     }
-}
+}}
 
 export default LoginPage;

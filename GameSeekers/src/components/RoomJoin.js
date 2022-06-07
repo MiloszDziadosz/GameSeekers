@@ -35,7 +35,7 @@ class RoomJoin extends React.Component {
         try {
             fetch(
                 "https://game-seekers-backend.herokuapp.com/v1/room/?room_name=" + this.state.room_name, {
-                method: 'patch',
+                method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
@@ -78,10 +78,14 @@ class RoomJoin extends React.Component {
     }
 
     render() {
-        return 
-            // this.props.history.push({ pathname: "/roomlist" })
-        
-    }
+        //this.props.history.push({ pathname: "/roomlist" })
+        return (
+        <div>
+            <h1>coś nie tak
+
+            </h1>
+        </div> 
+    )}
 }
 
 export default RoomJoin;

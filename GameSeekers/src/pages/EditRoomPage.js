@@ -87,6 +87,7 @@ class EditRoomPage extends React.Component {
             console.log(err.message)
             // TODO: notification for user
         }
+
     }
 
 
@@ -107,6 +108,7 @@ class EditRoomPage extends React.Component {
                         "members": this.state.unselected,
                         "game": this.state.game,
                         "city": this.state.city
+
                     })
 
             })
@@ -159,7 +161,6 @@ class EditRoomPage extends React.Component {
     getUnselectedMembers() {
         this.state.unselected = this.state.members.filter((member) => !member.selected)
     }
-
 
 
     render() {
