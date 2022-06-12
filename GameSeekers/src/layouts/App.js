@@ -6,6 +6,7 @@ import Navigation from './Navigation';
 import Page from './Page';
 import Footer from './Footer';
 import { ToastContainer } from "react-toastify";
+import '../styles/Mobile.css'
 
 class App extends Component {
   render() {
