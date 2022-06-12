@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/ContactPage.css';
+import '../styles/CreateRoom.css';
 import { Prompt } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -144,7 +144,7 @@ class CreateRoomPage extends React.Component {
 
     render() {
         return (
-            <div className="contact">
+            <div className="create-room">
                 <form onSubmit={this.handleSubmit}>
                     <h3>Tworzenie pokoju</h3>
                     <input name="room_name" type="text" value={this.state.room_name} onChange={this.handleChange} placeholder="Nazwa pokoju"></input>
@@ -159,7 +159,7 @@ class CreateRoomPage extends React.Component {
                             <option key={city_name} value={city_name}>{city_name}</option>
                         ))}
                     </select>
-                    <button type="submit">Utwórz</button>
+                    <button className='btn' type="submit">Utwórz</button>
                 </form>
                 <Prompt
                     when={this.state.isEmpty}

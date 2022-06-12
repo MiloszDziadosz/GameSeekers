@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/App.css';
+import '../styles/MeetingCU.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Navigation from './Navigation';
 import Page from './Page';

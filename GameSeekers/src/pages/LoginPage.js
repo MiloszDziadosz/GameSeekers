@@ -59,7 +59,7 @@ class LoginPage extends React.Component {
         else{
             return (
             
-            <div className="login-page-container" hidden={localStorage.getItem("currentUser")!=null>
+            <div className="login-page-container" hidden={localStorage.getItem("currentUser")!=null}>
                 <h1>Logowanie</h1>
                 <input
                     name="username"
@@ -80,10 +80,11 @@ class LoginPage extends React.Component {
                 </div>
                 <p>If you don't have account -{'>'} <Link to={{ pathname: "/register" }}>Register</Link></p> 
 
-            </div>
+            
            <form onSubmit={this.logout_user} hidden={localStorage.getItem("currentUser")==null}>
-                    <button type="submit">Logout</button>
+                    <button className='btn' type="submit">Logout</button>
                 </form>
+                </div>
         );
     }
 }}

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, withRouter } from 'react-router-dom';
-
+import "../styles/RoomPage.css"
 import { toast } from 'react-toastify';
 import MeetingInfo from "./MeetingInfo";
 import ChatList from '../components/chat/ChatList';
@@ -85,16 +85,23 @@ class RoomAdmin extends React.Component {
         return (
             <div className="room-container">
                 <ChatList room={this.state.room_name} />
+                <div className="room-title">
                 <p> Jesteś administratorem tego pokoju </p>
 
                 <p> {this.state.room_name}</p>
+                </div>
+                <div className="room-page-info">
                 <p>Gra: {this.state.game_name}</p>
                 <p> Admin: {this.state.admin}</p>
-                <p> Wolnych miejsc: {this.state.available}</p>
-                <p> Maksymalna liczba graczy: {this.state.maxsize}</p>
-                <p>Członkowie:</p>
+                <p> Miejsca: {this.state.maxsize - this.state.available}/{this.state.maxsize}</p>
+                </div>
+                <div className="member-list">
+                <div className="member-list-title"><p>Członkowie:</p></div>
+                <div className="member-list-items">
                 {this.state.members.map((item) => (
                     <p key={item.username}> {item.username}</p>))}
+                </div>
+                </div>
 
                 <MeetingInfo room_name={this.state.room_name} ifAdmin={ 1 }/>
                 <div className="buttons">

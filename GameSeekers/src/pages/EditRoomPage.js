@@ -1,6 +1,7 @@
 import React from 'react';
 import { Prompt } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import "../styles/EditRoom.css";
 
 
 class EditRoomPage extends React.Component {
@@ -165,7 +166,7 @@ class EditRoomPage extends React.Component {
 
     render() {
         return (
-            <div className="contact">
+            <div className="meeting-form">
                 <form onSubmit={this.handleSubmit}>
                     <h3>Edycja pokoju</h3>
                     <input name="room_name" type="text" value={this.state.room_name} onChange={this.handleChange} placeholder="Nazwa pokoju"></input>
@@ -203,7 +204,7 @@ class EditRoomPage extends React.Component {
                             ))}
                         </tbody>
                     </table>
-                    <button type="submit">Zapisz</button>
+                    <button className='btn' type="submit">Zapisz</button>
                 </form>
                 <Prompt
                     when={this.state.isEmpty}
