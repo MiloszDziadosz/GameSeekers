@@ -51,6 +51,10 @@ box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
 .title{
     text-align: center;
 }
+.title p {
+    font-weight: bold;
+    font-size: 12pt;
+}
 .game{
     display: flex;
 }

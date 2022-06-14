@@ -4,6 +4,7 @@ import Link from 'react-router-dom/Link';
 import { refreshToken } from '../actions/auth';
 import "../styles/Meeting.css"
 
+
 export default class MeetingInfo extends React.Component {
     constructor(props) {
         super(props);
@@ -11,7 +12,8 @@ export default class MeetingInfo extends React.Component {
         this.state = {
           room_name: props.room_name, 
           items: {},
-          autorized: true
+          autorized: true,
+          ifAdmin: props.ifAdmin,
         }
       }
 
@@ -105,6 +107,7 @@ export default class MeetingInfo extends React.Component {
             );
         }
         else {
+        if (this.state.ifAdmin) {
         return (
             <div>
             {
@@ -122,6 +125,23 @@ export default class MeetingInfo extends React.Component {
                     </div>
                 ))}
                 </div>
-        );
+        );}
+        else{
+            return (
+                <div>
+                {
+                    items.map((item) => (
+                        <div className="meetingInfo">
+                            <p>Data: {item.meeting_date}</p>
+                            <p>Addres: {item.address} </p>
+                            <p>Ile uczest: {item.number_of_participants} </p>
+                            <p>ID: {item.id}</p>
+                            <p>Status: {item.status_value}</p>
+                            
+                        </div>
+                    ))}
+                    </div>
+            )
+        }
       }}
 }
