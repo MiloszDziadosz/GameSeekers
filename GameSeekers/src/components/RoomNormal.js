@@ -52,7 +52,8 @@ class RoomNormal extends React.Component {
             <div className="room-container">
                 <ChatList room={this.state.room_name} />
                 <div className="room-title">
-                    <p> {this.state.room_name}</p>
+                <div className="room-name">
+                <p> {this.state.room_name}</p></div>
                 </div>
                 <div className="room-page-info">
                     <p>Gra: {this.state.game_name}</p>
