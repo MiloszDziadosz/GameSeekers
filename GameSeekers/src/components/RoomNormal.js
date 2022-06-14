@@ -51,6 +51,37 @@ class RoomNormal extends React.Component {
         return <Redirect to='/roomlist'/>;
     }
 
+    handleLeave = (e) => {
+        e.preventDefault();
+        try{
+            fetch("https://game-seekers-backend.herokuapp.com/v1/room/" + this.state.room_name+ "/leave", {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                }
+            }).then(response => {
+                if(response.status===200) {
+                    response.json().then(json => {
+                        toast.success('🦄 ' + json.detail, {
+                            position: "top-center",
+                            autoClose: 2000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                        });
+                        return <Redirect to='/roomlist'/>;
+                    })
+                    
+                }
+            })
+        } catch(err) {
+            console.log(err.message)
+        }
+    }
+
     render() {
         if (this.state.leave === true) {
             return <Redirect to='/roomlist'/>;
