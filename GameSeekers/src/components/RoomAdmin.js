@@ -87,13 +87,13 @@ class RoomAdmin extends React.Component {
                 <ChatList room={this.state.room_name} />
                 <div className="room-title">
                 <p> Jesteś administratorem tego pokoju </p>
-
-                <p> {this.state.room_name}</p>
+                <div className="room-name">
+                <p> {this.state.room_name}</p></div>
                 </div>
                 <div className="room-page-info">
-                <p>Gra: {this.state.game_name}</p>
-                <p> Admin: {this.state.admin}</p>
-                <p> Miejsca: {this.state.maxsize - this.state.available}/{this.state.maxsize}</p>
+                <p>Gra: <span>{this.state.game_name}</span></p>
+                <p> Admin: <span>{this.state.admin}</span></p>
+                <p> Miejsca: <span>{this.state.maxsize - this.state.available}/{this.state.maxsize}</span></p>
                 </div>
                 <div className="member-list">
                 <div className="member-list-title"><p>Członkowie:</p></div>

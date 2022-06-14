@@ -11,6 +11,14 @@
     display: flex;
     justify-content: space-evenly;
 }
+.room-page-info p{
+    font-size: 12pt;
+}
+.room-page-info span{
+    color: red;
+    font-weight: bold;
+    
+}
 .member-list-items{
     margin: 40px 0;
     display: flex;
@@ -18,9 +26,41 @@
 }
 .member-list-title p{
     text-align: center;
+    font-size: 14pt;
 }
+.room-title{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+}
+.room-name{
+    border: 2px solid;
+    border-radius: 5%;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
+    --angle: 0deg;
+    /* … */
+    border-image: linear-gradient(var(--angle), red, yellow) 1;
+    animation: 1s rotate linear infinite;
+  }
+  @property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+  @keyframes rotate {
+    to {
+      --angle: 360deg;
+    }
+  }
+  .room-name p{
+margin: 10px;
+
+  }
 .member-list{
     margin: 40px 0;
+    font-size: 14pt;
     display: flex;
     justify-content: center;
     align-content: center;
