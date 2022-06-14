@@ -12,6 +12,28 @@ class RoomNormal extends React.Component {
         this.state = props
     }
 
+    componentDidMount() {
+        try {
+            fetch(
+                "https://game-seekers-backend.herokuapp.com/v1/room/?room_name=" + this.state.room_name, {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                },
+            }).then((res) => res.json())
+                .then((json) => {
+                    json.results.map((item) => {
+                        Object.keys(item).map((key) => {
+                            this.setState({[key]: item[key]})
+                        })})
+                })
+
+        } catch (err) {
+            console.log(err.message)
+        }
+    }
+
     handleLeave = (e) => {
         e.preventDefault();
         try{
@@ -56,9 +78,9 @@ class RoomNormal extends React.Component {
                 <p> {this.state.room_name}</p></div>
                 </div>
                 <div className="room-page-info">
-                    <p>Gra: {this.state.game_name}</p>
-                    <p> Admin: {this.state.admin}</p>
-                    <p> Miejsca: {this.state.maxsize - this.state.available}/{this.state.maxsize}</p>
+                <p>Gra: <span>{this.state.game_name}</span></p>
+                <p> Admin: <span>{this.state.admin}</span></p>
+                <p> Miejsca: <span>{this.state.maxsize - this.state.available}/{this.state.maxsize}</span></p>
                 </div>
                 <div className="member-list">
                     <div className="member-list-title"><p>Członkowie:</p></div>
