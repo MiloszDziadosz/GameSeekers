@@ -8,17 +8,30 @@ class Chat extends Component {
     super(props)
     this.state={
       messages: [],
-      typedMessage: ""
+      typedMessage: "",
+      prevChat: 0,
     }
   }
 
-  componentDidMount(){
+  createSocket(){
     const url = `ws://game-seekers-backend.herokuapp.com/chat/${this.props.chat_id}/?token=${localStorage.getItem('access_token')}`
     Socket.connect(url)
     this.prepareConection(()=> {
       Socket.addCallbacks(this.setMessages, this.addMessage)
       Socket.fetchMessages(this.props.chat_id)
     })
+  }
+
+  componentDidMount(){
+    this.createSocket()
+  }
+
+  componentDidUpdate(){
+    if(this.props.chat_id !== this.state.prevChat){
+      this.setState({prevChat : this.props.chat_id})
+      Socket.disconnect()
+      this.createSocket()
+    }
   }
 
   componentWillUnmount(){
@@ -76,9 +89,9 @@ class Chat extends Component {
 
   render() {
     return (
-      <div>
-        <div>
-          <ul className='chat'>
+      <div className='chatbox'>
+        <div className='chat'>
+          <ul>
             {this.renderMessages(this.state.messages)}
           </ul>
         </div>
