@@ -117,7 +117,7 @@ export default class MeetingInfo extends React.Component {
                         <p>Status: {item.status_value}</p>
                         <Link to={{ pathname: "/editmeeting/:" + this.state.room_name, state: { id: item.id, room_name: this.state.room_name, meeting_date: item.meeting_date, address: item.address, status: item.status, number_of_participants: item.number_of_participants } }}>Edycja</Link>
                         <form id={item.id} onSubmit={this.handleDelete}>
-                            <button className="btn" type="submit">Usuń pokój</button>
+                            <button className="btn" type="submit">Usuń meeting</button>
                         </form>
                     </div>
                 ))}

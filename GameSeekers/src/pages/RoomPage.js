@@ -37,6 +37,7 @@ class RoomPage extends React.Component {
           admin={this.state.admin}
           available={this.state.available}
           game_name={this.state.game_name}
+          leave={false}
         />
 
       );

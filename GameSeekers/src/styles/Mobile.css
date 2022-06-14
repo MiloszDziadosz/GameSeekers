@@ -1,4 +1,4 @@
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
 
   
 .img22{
@@ -39,9 +39,14 @@
 .img3{
   display: none;
 }
+
+.panel2-left-side {
+
 }
 
-@media only screen and (max-width: 600px) {
+}
+
+@media only screen and (max-width: 768px) {
     
     .login-page-container, .register-page-container {
         background-color: white;
